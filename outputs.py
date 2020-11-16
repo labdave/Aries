@@ -370,7 +370,7 @@ class PackageLogFilter(logging.Filter):
         project_folder = StorageFolder(folder_path)
         sub_folders = project_folder.folders
         for sub_folder in sub_folders:
-            if "__init__.py" in sub_folder.file_names:
+            if "__init__.py" in sub_folder.file_names and hasattr(sub_folder, 'name'):
                 project_packages.append(sub_folder.name)
         return project_packages
 
