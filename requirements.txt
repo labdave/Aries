@@ -1,0 +1,10 @@
+openpyxl==3.0.7
+requests>=2.23.0
+google-cloud-core
+google-cloud-storage
+boto3>=1.14.9
+lxml>=4.5.1
+plotly>=4.5.0
+six>=1.15.0
+google-auth
+google-cloud-vision

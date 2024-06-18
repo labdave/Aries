@@ -1,0 +1,79 @@
+# This workflow will upload a Python Package using Twine when a release is created
+# For more information see:
+# https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
+
+name: Upload Python Packages
+
+on:
+  release:
+      types:
+        - created
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      # Get the full history for setting package version.
+      # In setup.py, the last number of the version is the total number of commits.
+    - run: |
+        git fetch --prune --unshallow
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        pip install setuptools wheel twine
+    - name: Get Git diff
+      id: git_diff
+      run: |
+        echo ::set-output name=commitpath::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
+    - name: Build and publish Aries-Python package
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      # Move setup.py out of Aries
+      # Build and publish the package outside of Aries.
+      run: |
+        mv setup/setup_full.py ../setup.py
+        cp README.md ../
+        cd ..
+        python setup.py sdist bdist_wheel
+        twine upload dist/*
+        rm -rf dist
+        rm -rf build
+    - name: Build and publish Aries-core package
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      # Move setup.py out of Aries
+      # Build and publish the package outside of Aries.
+      run: |
+        mv setup/setup_core.py ../setup.py
+        cp README.md ../
+        cd ..
+        python setup.py sdist bdist_wheel
+        twine upload dist/*
+        rm -rf dist
+        rm -rf build
+    - name: Build and publish Aries-storage package
+      if: Contains(steps.git_diff.outputs.commitpath, 'storage/')
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      # Move setup.py out of Aries
+      # Build and publish the package outside of Aries.
+      run: |
+        mv setup/setup_storage.py ../setup.py
+        cp docs/storage.md ../README.md
+        cd ..
+        python setup.py sdist bdist_wheel
+        twine upload dist/*
+        rm -rf dist
+        rm -rf build

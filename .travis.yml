@@ -1,0 +1,13 @@
+branches:
+  only:
+  - master
+language: python
+python: 3.7
+cache: pip
+install:
+  - pip install -r requirements.txt
+  - pip install coverage coveralls
+  - pip install --upgrade six>=1.13.0
+script: pip freeze && coverage run --source=. -m unittest discover -v -s tests -p "atest_*.py"
+after_success:
+  - coveralls
