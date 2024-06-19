@@ -9,12 +9,12 @@ from Aries.setup import setup
 
 
 setuptools.setup(
-    name="Aries-Python",
-    author="Qiu Qin",
-    author_email="qiuosier@gmail.com",
+    name="DL-Aries-Python",
+    author="Clay Parker",
+    author_email="parkerc71@gmail.com",
     description="Python package providing shortcuts to small tasks like string manipulation, "
                 "running background tasks, configuring logging, accessing web API etc.",
-    url="https://github.com/qiuosier/Aries",
+    url="https://github.com/labdave/Aries",
     version=setup.get_version(),
     long_description=setup.get_description("Aries/README.md"),
     install_requires=setup.get_requirements("Aries/requirements.txt"),

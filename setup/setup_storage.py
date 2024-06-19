@@ -9,11 +9,11 @@ from Aries.setup import setup
 
 
 setuptools.setup(
-    name="Aries-storage",
-    author="Qiu Qin",
-    author_email="qiuosier@gmail.com",
+    name="DL-Aries-storage",
+    author="Clay Parker",
+    author_email="parkerc71@gmail.com",
     description="Read and write files on Google Cloud Storage and Amazon S3 as if they are on local computer.",
-    url="https://github.com/qiuosier/Aries",
+    url="https://github.com/labdave/Aries",
     version=setup.get_version(),
     long_description=setup.get_description("Aries/docs/storage.md"),
     install_requires=setup.get_requirements("Aries/setup/requirements_storage.txt", req_aries=True),

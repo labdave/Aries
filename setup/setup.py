@@ -28,7 +28,7 @@ def get_description(readme):
         long_description = f.read()
         long_description = Markdown.from_text(
             long_description
-        ).make_links_absolute("https://github.com/qiuosier/Aries/blob/master/")
+        ).make_links_absolute("https://github.com/labdave/Aries/blob/master/")
         return long_description
 
 
